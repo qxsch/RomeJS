@@ -106,4 +106,14 @@ document.querySelectorAll('.roman-btn').forEach(btn => {
 });
 
 
+document.querySelectorAll('span[data-arabic-number], span[data-roman-number]').forEach(span => {
+    span.addEventListener('click', function() {
+        const numberStr = (this.textContent ?? '').trim();
+        console.log('Inserting number:', numberStr);
+        inputElement.value = numberStr;
+        inputElement.focus();
+        inputElement.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    span.style.cursor = 'pointer';
+});
 
