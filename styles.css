@@ -1,0 +1,48 @@
+/* Basis-Layout */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: system-ui, Arial, sans-serif; background: #101418; color: #f5f7fa; }
+
+.container { width: 100%; max-width: 720px; margin: 0 auto; padding: clamp(1rem, 4vw, 2rem); }
+
+h1 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.15; margin: 0 0 1.25rem; }
+
+.io-block { display: grid; gap: 0.75rem; }
+.io-block label { font-weight: 600; letter-spacing: 0.5px; }
+
+/* Roman Schnellwahl Pad */
+.roman-pad { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0; }
+.roman-btn { cursor: pointer; background: #2b3340; color: #f5f7fa; border: 1px solid #394555; border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.9rem; font-weight: 600; letter-spacing: .5px; line-height: 1.1; min-width: 2.4rem; text-align: center; transition: background .15s, transform .15s, box-shadow .15s; }
+.roman-btn:hover { background: #3a4554; }
+.roman-btn:active { transform: translateY(1px); background: #4a5668; }
+.roman-btn:focus-visible { outline: 2px solid #6aa9ff; outline-offset: 2px; }
+
+@media (prefers-color-scheme: light) { 
+	.roman-btn { background: #e5e9ef; color: #162029; border-color: #c1c9d2; }
+	.roman-btn:hover { background: #d9dfe6; }
+	.roman-btn:active { background: #cdd4dc; }
+}
+
+/* Größere Touch-Ziele auf Geräten mit grobem Pointer (z.B. Finger) */
+@media (pointer: coarse) {
+  .roman-pad { gap: 0.75rem; }
+  .roman-btn { padding: 0.75rem 1rem; font-size: 1.05rem; min-width: 2.8rem; }
+}
+
+input[type=text] { padding: 0.75rem 0.9rem; border: 2px solid #2b3340; border-radius: 10px; background: #181e24; color: #fff; font-size: 1rem; transition: border-color .2s, box-shadow .2s; }
+input[type=text]:focus { outline: none; border-color: #6aa9ff; box-shadow: 0 0 0 3px rgba(106,169,255,0.25); }
+input[type=text]::placeholder { color: #77808d; }
+
+/* Output Feld */
+output { display: block; padding: 1rem 1.1rem; min-height: 3.2rem; border-radius: 14px; font-weight: 600; letter-spacing: .4px; line-height: 1.35; font-size: 1.5rem; position: relative; overflow-wrap: anywhere; isolation: isolate; background: linear-gradient(140deg, #002e6e, #312555 42%, #5c2734 78%, #6b512b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* Halbtransparenter, weniger dominanter Hintergrund-Gradient als eigene Ebene */
+output::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(140deg, rgba(106,169,255,0.35), rgba(142,107,255,0.35) 42%, rgba(255,117,151,0.35) 78%, rgba(255,195,109,0.35)); box-shadow: 0 6px 18px -6px rgba(0,0,0,0.45), 0 2px 4px -1px rgba(0,0,0,0.4); z-index: -1; }
+
+
+.hint { font-size: 0.75rem; color: #88919d; margin: 0.25rem 0 0; }
+
+/* Responsive Verfeinerungen */
+@media (min-width: 520px) { .io-block { grid-template-columns: 1fr; } }
+@media (prefers-color-scheme: light) { html, body { background: #f2f5f8; color: #1b232b; } input[type=text] { background: #fff; color: #13181c; border-color: #d0d7df; } input[type=text]:focus { border-color: #6aa9ff; box-shadow: 0 0 0 3px rgba(106,169,255,0.3); } output { -webkit-background-clip: text; background-clip: text; } output::before { color: #1b232b; } .hint { color: #5a6571; } }
+
+/* Kleine Motion für Hover (rein dekorativ) */
+output:hover { filter: brightness(1.05) saturate(1.1); }
