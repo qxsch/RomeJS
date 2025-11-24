@@ -6,7 +6,7 @@ Roman to Arabic Converter
    * Specify the root element
    * Filter using css selector
 * Rome.js observes attribute changes and new nodes (optional)
-* Also comes with a ready to use index.html file
+* Also comes with a ready to use index.html file (Check out the demo page: https://qxsch.github.io/RomeJS/)
 
 
 ## Included web page
