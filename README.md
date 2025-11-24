@@ -84,3 +84,35 @@ Rome.attachToElement(
    }
 );
 ```
+
+
+### Rome.fromRoman
+Converts a roman number string to an arabic number.
+```js
+// returns NaN if input is not a valid Roman numeral, otherwise the Arabic number as integer
+let arabicNumber = Rome.fromRoman('XII'); // returns 12
+let badNumer = Rome.fromRoman('sdfasdfasdf'); // returns NaN
+```
+
+### Rome.toRoman
+Converts an arabic number to a roman number string.
+```js
+// returns null if input is not a valid integer within 1 - 3,999,999, otherwise the Roman numeral as string
+let romanNumber = Rome.toRoman(12); // returns 'XII'
+let badNumber = Rome.toRoman(4000000); // returns null
+```
+
+### Rome.getNumberFormat
+Returns what format the number is (roman, arabic or invalid)
+```js
+let format = Rome.getNumberFormat("1234"); // returns 'arabic'
+let format2 = Rome.getNumberFormat("XII"); // returns 'roman'
+let format3 = Rome.getNumberFormat("sdfasdfasdf"); // returns 'invalid'
+```
+
+### Rome.formatAsString
+Formats a number (roman or arabic) as a string in the requested format.
+```js
+let formatted1 = Rome.formatAsString(213124); // returns '213,124' (depending on locale)
+let formatted2 = Rome.formatAsString("XII"); // returns 'XII'
+```
