@@ -11,7 +11,7 @@ h1 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.15; margin: 0 0 1.2
 
 /* Roman Schnellwahl Pad */
 .roman-pad { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0; }
-.roman-btn { cursor: pointer; background: #2b3340; color: #f5f7fa; border: 1px solid #394555; border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.9rem; font-weight: 600; letter-spacing: .5px; line-height: 1.1; min-width: 2.4rem; text-align: center; transition: background .15s, transform .15s, box-shadow .15s; }
+.roman-btn { cursor: pointer; background: #2b3340; color: #f5f7fa; border: 1px solid #394555; border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.9rem; font-weight: 600; letter-spacing: .5px; line-height: 1.1; min-width: 2.4rem; text-align: center; transition: background .15s, transform .15s, box-shadow .15s; touch-action: manipulation; }
 .roman-btn:hover { background: #3a4554; }
 .roman-btn:active { transform: translateY(1px); background: #4a5668; }
 .roman-btn:focus-visible { outline: 2px solid #6aa9ff; outline-offset: 2px; }
@@ -30,7 +30,7 @@ h1 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.15; margin: 0 0 1.2
 
 /* Operator Pad (+/-) */
 .operator-pad { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0; margin-top: 0.5rem; }
-.operator-btn { cursor: pointer; background: linear-gradient(135deg, #1a4d2e 0%, #2d6a4f 50%, #1b5e3f 100%); color: #f5f7fa; border: 1px solid #2d6a4f; border-radius: 8px; padding: 0.55rem 1.25rem; font-size: 1.1rem; font-weight: 700; letter-spacing: .5px; line-height: 1.1; min-width: 3.2rem; text-align: center; transition: background .15s, transform .15s, box-shadow .15s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.operator-btn { cursor: pointer; background: linear-gradient(135deg, #1a4d2e 0%, #2d6a4f 50%, #1b5e3f 100%); color: #f5f7fa; border: 1px solid #2d6a4f; border-radius: 8px; padding: 0.55rem 1.25rem; font-size: 1.1rem; font-weight: 700; letter-spacing: .5px; line-height: 1.1; min-width: 3.2rem; text-align: center; transition: background .15s, transform .15s, box-shadow .15s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); touch-action: manipulation; }
 .operator-btn:hover { background: linear-gradient(135deg, #206636 0%, #35825f 50%, #247349 100%); box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
 .operator-btn:active { transform: translateY(1px); background: linear-gradient(135deg, #154025 0%, #25583e 50%, #164c32 100%); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
 .operator-btn:focus-visible { outline: 2px solid #52b788; outline-offset: 2px; }
