@@ -48,7 +48,17 @@ Rome.renderElements(
   
    // observes new elements being added (and trigger a render)
    // it will honor htmlNode and querySelector -> so just new elements that match will be rendered
-   observeNewElements = true
+   observeNewElements = true,
+
+   // attributes name for the html elements:
+   //    arabic number input (f.e. 12),
+   //    roman number input (f.e. XII) and
+   //    render output (auto, roman, arabic)
+   customAttributes = {
+        arabicName: 'data-arabic-number',
+        romanName: 'data-roman-number',
+        renderName: 'data-render-number'
+   }
 );
 ```
 
@@ -61,6 +71,16 @@ Rome.attachToElement(
    htmlNode,
   
    // observes attributes changes (and trigger a re-render)
-   observeAttributes = true
+   observeAttributes = true,
+
+   // attributes name for the html elements:
+   //    arabic number input (f.e. 12),
+   //    roman number input (f.e. XII) and
+   //    render output (auto, roman, arabic)
+   customAttributes = {
+        arabicName: 'data-arabic-number',
+        romanName: 'data-roman-number',
+        renderName: 'data-render-number'
+   }
 );
 ```

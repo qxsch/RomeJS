@@ -14,6 +14,79 @@ D̅ = 500'000
 M̅ = 1'000'000
 */
 
+class RomeAttributes {
+    arabicName = 'data-arabic-number';
+    romanName = 'data-roman-number';
+    renderName = 'data-render-number';
+
+    constructor(customAttributeNames = {}) {
+        if(typeof customAttributeNames !== 'object' || customAttributeNames === null || customAttributeNames === undefined) {
+            throw new Error('customAttributeNames must be an object');
+        }
+        
+        if(customAttributeNames.arabicName && typeof customAttributeNames.arabicName === 'string') {
+            this.arabicName = customAttributeNames.arabicName;
+        }
+        if(customAttributeNames.romanName && typeof customAttributeNames.romanName === 'string') {
+            this.romanName = customAttributeNames.romanName;
+        }
+        if(customAttributeNames.renderName && typeof customAttributeNames.renderName === 'string') {
+            this.renderName = customAttributeNames.renderName;
+        }
+    }
+
+    #hasAttribute(htmlNode, attributeName) {
+        // is element?
+        if(!(htmlNode instanceof HTMLElement)) {
+            return false;
+        }
+        return htmlNode.hasAttribute(attributeName);
+    }
+    #getAttribute(htmlNode, attributeName) {
+        // is element?
+        if(!(htmlNode instanceof HTMLElement)) {
+            return null;
+        }
+        return htmlNode.getAttribute(attributeName);
+    }
+
+    hasArabicAttribute(htmlNode) {
+        return this.#hasAttribute(htmlNode, this.arabicName);
+    }
+    getArabicAttribute(htmlNode) {
+        let attr = this.#getAttribute(htmlNode, this.arabicName);
+        if(attr === null) {
+            return "";
+        }
+        return String(attr).trim().toLowerCase();
+    }
+    hasRomanAttribute(htmlNode) {
+        return this.#hasAttribute(htmlNode, this.romanName);
+    }
+    getRomanAttribute(htmlNode) {
+        let attr = this.#getAttribute(htmlNode, this.romanName);
+        if(attr === null) {
+            return "";
+        }
+        return String(attr).trim().toLowerCase();
+    }
+    hasRenderAttribute(htmlNode) {
+        return this.#hasAttribute(htmlNode, this.renderName);
+    }
+    getRenderAttribute(htmlNode) {
+        let attr = this.#getAttribute(htmlNode, this.renderName);
+        if(attr === null) {
+            return 'auto';
+        }
+        attr = String(attr).trim().toLowerCase();
+        if(attr !== 'arabic' && attr !== 'roman') {
+            return 'auto';
+        }
+        return attr;
+    }
+}
+
+
 class Rome {
     static constants = Object.freeze({ 
         MIN_ROMAN_NUMERAL: 1,
@@ -193,27 +266,26 @@ class Rome {
         return String(value);
     }
 
-    static #renderHtmlElement(htmlNode) {
+    static #renderHtmlElement(htmlNode, customAttributes) {
         // is element?
         if(!(htmlNode instanceof HTMLElement)) {
             return;
         }
-        // is span element?
-        if(htmlNode.tagName.toLowerCase() !== 'span') {
-            return;
+        if(!(customAttributes instanceof RomeAttributes)) {
+            customAttributes = new RomeAttributes();
         }
+        console.log(customAttributes);
+    
         // get the render mode
         let renderType = 'auto';
-        if(htmlNode.dataset.renderNumber) {
-            renderType = String(htmlNode.dataset.renderNumber).trim().toLowerCase();
-            if(renderType !== 'arabic' && renderType !== 'roman') {
-                renderType = 'auto';
-            }
+        if(customAttributes.hasRenderAttribute(htmlNode)) {
+            renderType = customAttributes.getRenderAttribute(htmlNode);
         }
         // get the value
         let value=null;
-        if(htmlNode.dataset.arabicNumber) {
-            value = String(htmlNode.dataset.arabicNumber).trim().toLowerCase();
+        if(customAttributes.hasArabicAttribute(htmlNode)) {
+            value = customAttributes.getArabicAttribute(htmlNode);
+            console.log('Arabic attribute value:', value);
             if(value === 'min') {
                 value = this.constants.MIN_ROMAN_NUMERAL;
             }
@@ -230,8 +302,8 @@ class Rome {
                 renderType = 'roman';
             }
         }
-        else if(htmlNode.dataset.romanNumber) {
-            value = String(htmlNode.dataset.romanNumber).trim().toLowerCase();
+        else if(customAttributes.hasRomanAttribute(htmlNode)) {
+            value = customAttributes.getRomanAttribute(htmlNode);
             if(value === 'min') {
                 value = this.constants.MIN_ROMAN_NUMERAL;
             }
@@ -257,11 +329,19 @@ class Rome {
         }
     }
 
-    static attachToElement(htmlNode, observeAttributes = true) {
+    static attachToElement(htmlNode, observeAttributes = true, customAttributes = null) {
         if(!(htmlNode instanceof HTMLElement)) {
             return;
         }
-        this.#renderHtmlElement(htmlNode);
+        // setting customAttributes
+        if(customAttributes === null || customAttributes === undefined) {
+            customAttributes = new RomeAttributes();
+        }
+        else if(!(customAttributes instanceof RomeAttributes)) {
+            customAttributes = new RomeAttributes(customAttributes);
+        }
+
+        this.#renderHtmlElement(htmlNode, customAttributes);
         if(observeAttributes) {
             // register attribute observer to re-render on attribute changes
             const observer = new MutationObserver(mutations => {
@@ -275,12 +355,28 @@ class Rome {
         }
     }
 
-    static renderElements(querySelector = 'span[data-arabic-number], span[data-roman-number]', htmlNode = null, observeAttributes = true, observeNewElements = true) {
+    static renderElements(
+        querySelector = 'span[data-arabic-number], span[data-roman-number]',
+        htmlNode = null,
+        observeAttributes = true,
+        observeNewElements = true,
+        customAttributes = null
+    ) {
+        // htmlNode defaults to document
         if(!(htmlNode instanceof HTMLElement)) {
             htmlNode = document;
         }
+        // setting customAttributes
+        if(customAttributes === null || customAttributes === undefined) {
+            customAttributes = new RomeAttributes();
+        }
+        else if(!(customAttributes instanceof RomeAttributes)) {
+            customAttributes = new RomeAttributes(customAttributes);
+        }
+
+        // attach to existing elements
         htmlNode.querySelectorAll(querySelector).forEach(el => {
-            this.attachToElement(el, observeAttributes);
+            this.attachToElement(el, observeAttributes, customAttributes);
         });
 
         // Should we watch for new elements?
@@ -292,11 +388,11 @@ class Rome {
                             if (node.nodeType === Node.ELEMENT_NODE) {
                                 // If the added node itself matches
                                 if (node.matches(querySelector)) {
-                                    this.attachToElement(node, observeAttributes);
+                                    this.attachToElement(node, observeAttributes, customAttributes);
                                 }
                                 // Or if descendants inside the added node match
                                 node.querySelectorAll?.(querySelector).forEach(el => {
-                                    this.attachToElement(el, observeAttributes);
+                                    this.attachToElement(el, observeAttributes, customAttributes);
                                 });
                             }
                         });
