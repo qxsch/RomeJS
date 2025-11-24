@@ -1,12 +1,13 @@
 
-Rome.NUMBER_FORMAT_LOCALE = 'de-CH';
+// Rome.NUMBER_FORMAT_LOCALE = 'de-CH';
 Rome.renderElements();
 
+const inputElement = document.getElementById('inputElement');
 
 
-document.getElementById('eingabe').addEventListener('keydown', function(event) {
-    const outputElement = document.getElementById('ausgabe');
-    if(outputElement === null) {
+inputElement.addEventListener('keydown', function(event) {
+    const outputElement = document.getElementById('outputElement');
+    if(outputElement === null || outputElement === undefined) {
         return;
     }
     // has focused input field
@@ -19,7 +20,7 @@ document.getElementById('eingabe').addEventListener('keydown', function(event) {
         this.value = input;
     }
     if(input.length === 0) {
-        outputElement.textContent = 'Bitte Zahl eingeben';
+        outputElement.textContent = 'Please enter a number';
         return;
     }
     const format = Rome.getNumberFormat(input);
@@ -69,17 +70,17 @@ document.getElementById('eingabe').addEventListener('keydown', function(event) {
     }
     // render number
     if (format === 'roman') {
-        outputElement.textContent = 'Arabisch: ' +  Rome.formatAsString(Rome.fromRoman(input));
+        outputElement.textContent = 'Arabic: ' +  Rome.formatAsString(Rome.fromRoman(input));
     }
     else if (format === 'arabic') {
-        outputElement.textContent = 'Römisch: ' + Rome.formatAsString(Rome.toRoman(parseInt(input, 10)));
+        outputElement.textContent = 'Roman: ' + Rome.formatAsString(Rome.toRoman(parseInt(input, 10)));
     }
     else {
-        outputElement.textContent = 'Ungültiges Format';
+        outputElement.textContent = 'Invalid format';
     }
 });
 
-document.getElementById('eingabe').addEventListener('input', function() {
+inputElement.addEventListener('input', function() {
     // trigger keydown event with null event to re-render output
     const event = new Event('keydown');
     this.dispatchEvent(event);
@@ -89,17 +90,18 @@ document.getElementById('eingabe').addEventListener('input', function() {
 document.querySelectorAll('.roman-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         const ch = this.dataset.char;
-        const input = document.getElementById('eingabe');
-        if(!input) { return; }
-        const start = input.selectionStart ?? input.value.length;
-        const end = input.selectionEnd ?? input.value.length;
-        const before = input.value.slice(0, start);
-        const after = input.value.slice(end);
-        input.value = before + ch + after;
+        if(inputElement === null || inputElement === undefined) { 
+            return; 
+        }
+        const start = inputElement.selectionStart ?? inputElement.value.length;
+        const end = inputElement.selectionEnd ?? inputElement.value.length;
+        const before = inputElement.value.slice(0, start);
+        const after = inputElement.value.slice(end);
+        inputElement.value = before + ch + after;
         const newPos = start + ch.length;
-        input.focus();
-        input.setSelectionRange(newPos, newPos);
-        input.dispatchEvent(new Event('input', { bubbles: true }));
+        inputElement.focus();
+        inputElement.setSelectionRange(newPos, newPos);
+        inputElement.dispatchEvent(new Event('input', { bubbles: true }));
     });
 });
 

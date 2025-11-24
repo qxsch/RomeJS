@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zahlen Konverter</title>
+  <title>Number Converter</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="container">
-    <h1>Zahlen Konverter</h1>
-    <h2>Konvertiert zwischen römischen und arabischen Ziffern</h2>
+    <h1>Number Converter</h1>
+    <h2>Converts between Roman and Arabic numerals</h2>
     <p>
-      Von <nobr><span data-arabic-number="min" data-render-number="arabic"></span> bis <span data-arabic-number="max" data-render-number="arabic"></span></nobr>
-      <nobr>(<span data-arabic-number="min" data-render-number="roman"></span> bis <span data-arabic-number="max" data-render-number="roman"></span>)</nobr>
+      From <nobr><span data-arabic-number="min" data-render-number="arabic"></span> to <span data-arabic-number="max" data-render-number="arabic"></span></nobr>
+      <nobr>(<span data-arabic-number="min" data-render-number="roman"></span> to <span data-arabic-number="max" data-render-number="roman"></span>)</nobr>
     </p>
-    <form class="io-block" aria-label="Eingabe und Ausgabe">
-      <label for="eingabe">Eingabe</label>
-      <div class="roman-pad" aria-label="Römische Eingabe Schnellwahl">
-        <button type="button" class="roman-btn" data-char="I" aria-label="I einfügen">I</button>
-        <button type="button" class="roman-btn" data-char="V" aria-label="V einfügen">V</button>
-        <button type="button" class="roman-btn" data-char="X" aria-label="X einfügen">X</button>
-        <button type="button" class="roman-btn" data-char="L" aria-label="L einfügen">L</button>
-        <button type="button" class="roman-btn" data-char="C" aria-label="C einfügen">C</button>
-        <button type="button" class="roman-btn" data-char="D" aria-label="D einfügen">D</button>
-        <button type="button" class="roman-btn" data-char="M" aria-label="M einfügen">M</button>
-        <button type="button" class="roman-btn" data-char="V̅" aria-label="V mit Überstrich einfügen">V̅</button>
-        <button type="button" class="roman-btn" data-char="X̅" aria-label="X mit Überstrich einfügen">X̅</button>
-        <button type="button" class="roman-btn" data-char="L̅" aria-label="L mit Überstrich einfügen">L̅</button>
-        <button type="button" class="roman-btn" data-char="C̅" aria-label="C mit Überstrich einfügen">C̅</button>
-        <button type="button" class="roman-btn" data-char="D̅" aria-label="D mit Überstrich einfügen">D̅</button>
-        <button type="button" class="roman-btn" data-char="M̅" aria-label="M mit Überstrich einfügen">M̅</button>
+    <form class="io-block" aria-label="Input and Output">
+      <label for="inputElement">Input</label>
+      <div class="roman-pad" aria-label="Roman Input Quick Selection">
+        <button type="button" class="roman-btn" data-char="I" aria-label="Insert I">I</button>
+        <button type="button" class="roman-btn" data-char="V" aria-label="Insert V">V</button>
+        <button type="button" class="roman-btn" data-char="X" aria-label="Insert X">X</button>
+        <button type="button" class="roman-btn" data-char="L" aria-label="Insert L">L</button>
+        <button type="button" class="roman-btn" data-char="C" aria-label="Insert C">C</button>
+        <button type="button" class="roman-btn" data-char="D" aria-label="Insert D">D</button>
+        <button type="button" class="roman-btn" data-char="M" aria-label="Insert M">M</button>
+        <button type="button" class="roman-btn" data-char="V̅" aria-label="Insert V with overline">V̅</button>
+        <button type="button" class="roman-btn" data-char="X̅" aria-label="Insert X with overline">X̅</button>
+        <button type="button" class="roman-btn" data-char="L̅" aria-label="Insert L with overline">L̅</button>
+        <button type="button" class="roman-btn" data-char="C̅" aria-label="Insert C with overline">C̅</button>
+        <button type="button" class="roman-btn" data-char="D̅" aria-label="Insert D with overline">D̅</button>
+        <button type="button" class="roman-btn" data-char="M̅" aria-label="Insert M with overline">M̅</button>
       </div>
-      <input id="eingabe" name="eingabe" type="text" placeholder="Text hier eingeben" />
-
-      <label for="ausgabe">Ausgabe</label>
-      <!-- Statisches Output-Feld ohne JavaScript -->
-      <output id="ausgabe" name="ausgabe">Bitte Zahl eingeben</output>
+      <input id="inputElement" name="inputElement" type="text" placeholder="Enter text here" />
+      <label for="outputElement">Output</label>
+      <output id="outputElement" name="outputElement">Please enter a number</output>
     </form>
   </main>
   <script src="rome.js"></script>
