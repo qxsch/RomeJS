@@ -98,7 +98,6 @@ class Rome {
     static getNumberFormat(input) {
         const romanRegex = /^[IVXLCDM\u0305]+$/i;
         const arabicRegex = /^\d+$/;
-
         if (romanRegex.test(input)) {
             return 'roman';
         }

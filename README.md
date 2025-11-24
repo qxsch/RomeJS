@@ -115,4 +115,5 @@ Formats a number (roman or arabic) as a string in the requested format.
 ```js
 let formatted1 = Rome.formatAsString(213124); // returns '213,124' (depending on locale)
 let formatted2 = Rome.formatAsString("XII"); // returns 'XII'
+let formatted3 = Rome.formatAsString(213124, 'de-CH'); // returns '213'124'
 ```
