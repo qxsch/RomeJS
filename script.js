@@ -4,14 +4,9 @@ Rome.renderElements();
 
 const inputElement = document.getElementById('inputElement');
 
-
 inputElement.addEventListener('keydown', function(event) {
     const outputElement = document.getElementById('outputElement');
     if(outputElement === null || outputElement === undefined) {
-        return;
-    }
-    // has focused input field
-    if(this !== document.activeElement) {
         return;
     }
     // standard input cleaning
@@ -27,10 +22,10 @@ inputElement.addEventListener('keydown', function(event) {
 
     // increase or decrease value on ArrowUp or ArrowDown
     if(event) {
-        if(!(event.shiftKey || event.ctrlKey || event.altKey || event.metaKey)) {
+        if(!(event.ctrlKey || event.altKey || event.metaKey)) {
             if(format === 'roman') {
                 // increase
-                if(event.key === 'ArrowUp' || event.key === '+') {
+                if((!event.shiftKey && event.key === 'ArrowUp') || event.key === '+') {
                     let arabicValue = Rome.fromRoman(input);
                     if(!isNaN(arabicValue) && arabicValue < Rome.constants.MAX_ROMAN_NUMERAL) {
                         input = Rome.toRoman(arabicValue + 1);
@@ -38,7 +33,7 @@ inputElement.addEventListener('keydown', function(event) {
                     }
                 }
                 // decrease
-                else if( event.key === 'ArrowDown' || event.key === '-') {
+                else if((!event.shiftKey && event.key === 'ArrowDown') || event.key === '-') {
                     let arabicValue = Rome.fromRoman(input);
                     if(!isNaN(arabicValue) && arabicValue > Rome.constants.MIN_ROMAN_NUMERAL) {
                         input = Rome.toRoman(arabicValue - 1);
@@ -48,7 +43,7 @@ inputElement.addEventListener('keydown', function(event) {
             }
             else if(format === 'arabic') {
                 // increase
-                if(event.key === 'ArrowUp' || event.key === '+') {
+                if((!event.shiftKey && event.key === 'ArrowUp') || event.key === '+') {
                     let arabicValue = parseInt(input, 10);
                     if(!isNaN(arabicValue) && arabicValue < Rome.constants.MAX_ROMAN_NUMERAL) {
                         arabicValue += 1;
@@ -57,7 +52,7 @@ inputElement.addEventListener('keydown', function(event) {
                     }
                 }
                 // decrease
-                else if(event.key === 'ArrowDown' || event.key === '-') {
+                else if((!event.shiftKey && event.key === 'ArrowDown') || event.key === '-') {
                     let arabicValue = parseInt(input, 10);
                     if(!isNaN(arabicValue) && arabicValue > Rome.constants.MIN_ROMAN_NUMERAL) {
                         arabicValue -= 1;
@@ -115,5 +110,26 @@ document.querySelectorAll('span[data-arabic-number], span[data-roman-number]').f
         inputElement.dispatchEvent(new Event('input', { bubbles: true }));
     });
     span.style.cursor = 'pointer';
+});
+
+// Operator button functionality (+/-)
+document.querySelectorAll('.operator-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if(inputElement === null || inputElement === undefined) { 
+            return; 
+        }
+
+        const operation = this.dataset.operation;
+        if(!operation) {
+            return;
+        }
+        if(operation === 'increase' || operation === 'decrease') {
+            const event = new KeyboardEvent('keydown', {
+                key: operation === 'increase' ? '+' : '-',
+                bubbles: true
+            });
+            inputElement.dispatchEvent(event);
+        }    
+    });
 });
 
