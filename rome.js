@@ -274,7 +274,6 @@ class Rome {
         if(!(customAttributes instanceof RomeAttributes)) {
             customAttributes = new RomeAttributes();
         }
-        console.log(customAttributes);
     
         // get the render mode
         let renderType = 'auto';
@@ -285,7 +284,6 @@ class Rome {
         let value=null;
         if(customAttributes.hasArabicAttribute(htmlNode)) {
             value = customAttributes.getArabicAttribute(htmlNode);
-            console.log('Arabic attribute value:', value);
             if(value === 'min') {
                 value = this.constants.MIN_ROMAN_NUMERAL;
             }
